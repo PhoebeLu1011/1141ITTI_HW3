@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <title>2025 MediaTek《Girls! TECH Action》– Read More</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="Girls! Tech Action 兩場活動紀錄" name="description" />
+
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon" />
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+
+  <!-- Libraries Stylesheet -->
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+  <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet" />
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/style.css" rel="stylesheet" />
+
+  <style>
+    /* ===== Minimal additions, 不影響全站 ===== */
+    :root {
+      --gta-accent: #6c8aa6; /* 莫蘭迪藍偏灰一點 */
+    }
+    .article-hero {
+      background: #f8f9fa;
+      padding: 6rem 0 3rem;
+      margin-top: 72px; /* 避開 fixed navbar */
+    }
+    .article-meta { font-size: 0.95rem; color: #6c757d; }
+    .tag {
+      display:inline-block; padding:.25rem .6rem; border:1px solid #e1e5ea; border-radius:999px; font-size:.85rem; margin-right:.4rem; margin-bottom:.4rem; color:#6c757d;
+    }
+
+    /* 兩欄佈局：lg 以上顯示 Sticky TOC，以下改頂部 Pills */
+    #toc .list-group-item.active { background-color: var(--gta-accent); border-color: var(--gta-accent); }
+    .position-sticky { position: -webkit-sticky; position: sticky; }
+
+    /* 頂部 Pills（手機／平板）*/
+    .session-pills .nav-link { border-radius: 999px; }
+    .session-pills .nav-link.active { background: var(--gta-accent); color:#fff; }
+
+    /* 文章內圖片微陰影 */
+    .article-content img { max-width: 100%; border-radius: .5rem; box-shadow: 0 8px 24px rgba(0,0,0,.06); margin: 1.25rem 0; }
+
+    /* 小工具：分隔線上的小標籤 */
+    .hr-label { display:flex; align-items:center; color:#6c757d; }
+    .hr-label::before, .hr-label::after { content:""; flex:1; height:1px; background:#e9ecef; }
+    .hr-label span { padding:0 .75rem; font-size:.9rem; }
+  </style>
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="90">
+
+
+  <!-- Hero / Breadcrumb -->
+  <section class="article-hero">
+    <div class="container">
+      <div class="row align-items-end">
+        <div class="col-lg-8">
+          <h1 class="text-uppercase mb-3"> 2025 MediaTek</h1>
+          <h1 class="text-uppercase mb-3">《Girls! TECH Action》</h1>
+          <p class="article-meta mb-0">
+            <i class="far fa-calendar-alt mr-2"></i> Sep 2025
+            <span class="mx-2">•</span>
+            <i class="far fa-user mr-2"></i> by Pei-Fan Lu
+            <span class="mx-2">•</span>
+          </p>
+        </div>
+        <div class="col-lg-4 text-lg-right mt-4 mt-lg-0">
+          <a class="btn btn-outline-primary" href="index.html#blog"><i class="fa fa-arrow-left mr-2"></i>Back to Blog</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 內容區：左 TOC / 右 內容（lg 以上） -->
+  <section class="container py-5 article-content">
+    <!-- 行動版／平板：頂部 Pills 做快速跳轉 -->
+    <div class="d-lg-none mb-4">
+      <ul class="nav nav-pills session-pills justify-content-start">
+        <li class="nav-item mr-2 mb-2"><a class="nav-link active" href="#event-a">University session</a></li>
+        <li class="nav-item mr-2 mb-2"><a class="nav-link" href="#event-b">High school session - Workshop Assistant</a></li>
+      </ul>
+    </div>
+
+    <div class="row">
+      <!-- 左側 TOC：lg 以上顯示 -->
+      <aside class="col-lg-3 d-none d-lg-block">
+        <div class="position-sticky" style="top: 110px;">
+          <nav id="toc" class="list-group small">
+            <div class="list-group-item disabled">2025 MediaTek《Girls! TECH Action》</div>
+            <a class="list-group-item list-group-item-action" href="#event-a">A — University session</a>
+            <a class="list-group-item list-group-item-action" href="#a-overview">A — Overview</a>
+            <a class="list-group-item list-group-item-action" href="#a-gallery">A — Gallery</a>
+
+            <a class="list-group-item list-group-item-action" href="#event-b">B — High school session - Workshop Assistant</a>
+            <a class="list-group-item list-group-item-action" href="#b-overview">B — Overview</a>
+            <a class="list-group-item list-group-item-action" href="#b-gallery">B — Gallery</a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- 右側內容 -->
+      <div class="col-lg-9">
+        <!-- 封面圖與導言 -->
+        <p class="lead">Launched by <strong>the MediaTek Foundation </strong>, <strong> Girls! TECH Action program</strong> introduced the<strong> “Future Design Workshop for Girls in Technology,”</strong> dedicated to increasing girl’s participation in technology and STEM fields and inspiring more girls to explore diverse career paths.</p>
+        
+
+        <!-- ===== 場次 A ===== -->
+        <hr class="my-5">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img id="event-a" src="img/大合照.jpg" alt="Girls! TECH Action" style="max-width: 90%; height: auto; border-radius: 10px;">
+
+        </div>
+        <h2  id="a-overview" class="mt-0">Future Design Workshop for Girls in Technology — University Session（2025/05/21）</h2>
+        <p >On a Wednesday just before finals week, I went to the MediaTek headquarters in Hsinchu to join the Girls! TECH Action University Session.</p>
+        <p>During the workshop, I not only toured the headquarters but also gained insights and experiences that go far beyond what we usually learn in class. Through the s’ sharing and Q&A, I realized more clearly that women in technology can pursue diverse career paths while demonstrating strong competitiveness. What inspired me the most was that they all shared one thing in common:<strong> confidence</strong> — <strong> belief that they can achieve their goals and the courage to try.</strong></p>
+        <p>Interestingly, my roommate that day turned out to be my current roommate’s high school classmate! This unexpected connection brought even more joy and surprise to the day. Meeting such wonderful peers made the journey more meaningful and amazing!</p>
+        <p>One of the most memorable moments was watching the video “Run Like a Girl”, especially the line:</p>
+        <p style="text-align:center;font-style:italic"><strong>“Let’s run like a girl!”</strong></p>
+        <p>This message deeply resonated with me. Girls should not be confined by societal frameworks or stereotypes. Instead, we should believe in ourselves and boldly live out the vision of who we truly want to be.</p>
+        <p style="text-align:center"><strong>LET’S MAKE #LIKEAGIRL MEAN AMAZING THINGS!</strong></p>
+        <p>I am sincerely grateful to the MediaTek Foundation for organizing this program. It gave us an early opportunity to better understand career paths in the tech industry, and it encouraged me to be braver in exploring different possibilities.</p>
+        <h3 id="a-gallery">Gallery</h3>
+        <div class="slider">
+          <div class="col-md-5"><img src="img/245.jpg" alt="場次A 照片 1" class="img-fluid"></div>
+          <div class="col-md-5"><img src="img/324.jpg" alt="場次A 照片 2" class="img-fluid"></div>
+          <div class="col-md-5"><img src="img/432.jpg" alt="場次A 照片 2" class="img-fluid"></div>
+        </div>
+
+
+        <!-- ===== 場次 B ===== -->
+        <div class="hr-label my-5"><span>下一場</span></div>
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img id="event-b" src="img/medme.jpg" alt="Girls! TECH Action" style="max-width: 90%; height: auto; border-radius: 10px;">
+        </div>
+        <h2 id="b-overview">Future Design Workshop for Girls in Technology — High School Session（2025/08/02-03）</h2>
+        <p>     I am truly grateful to Edie for inviting me back to Girls! TECH Action High School session as a senior for the university session.</p>
+        <p>     During the event, I not only shared my own learning journey but also had the chance to hear inspiring stories from mentors across different fields. Their stories and passion deeply inspired me. I was also impressed by the high school participants in the program—they had the opportunity to visit fascinating places, such as research labs, and showed great courage in expressing their ideas and asking questions. Accompanying them on this journey felt like revisiting my own high school days.</p>
+        <p>     Lastly, I sincerely thank the MediaTek Foundation for organizing such a wonderful program, and I am glad to have met an amazing team and fellow seniors to share this experience with!</p>
+        
+
+        <h3 id="b-gallery">Gallery</h3>
+        <div class="row">
+          <div class="col-md-6"><img src="img/543.jpg" alt="場次B 照片 1" class="img-fluid"></div>
+          <div class="col-md-6"><img src="img/345.jpg" alt="場次B 照片 2" class="img-fluid"></div>
+        </div>
+
+        <div class="mt-3">
+          <span class="tag">mediatekFoundation聯發科技教育基金會</span>
+          <span class="tag">Girls_TECH_Action</span>
+        </div>
+
+        <!-- 上下篇（可保留你的連結） -->
+        <hr class="my-5"/>
+        <div class="d-flex justify-content-between">
+          <a href="qcewksexp.html" class="btn btn-outline-secondary"><i class="fa fa-long-arrow-alt-left mr-2"></i> Previous</a>
+          <a href="qcewksexp.html" class="btn btn-outline-primary">Next <i class="fa fa-long-arrow-alt-right ml-2"></i></a>
+        </div>
+      </div>
+    </div>
+    
+  </section>
+  <!-- Footer（沿用首頁） -->
+  <div class="container-fluid bg-primary text-white mt-5 py-5 px-sm-3 px-md-5">
+      <p class="m-0">&copy; <a class="text-white font-weight-bold" href="#">2025 Pei-Fan Lu</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold" href="https://htmlcodex.com">HTML Codex</a></p>
+    </div>
+  </div>
+
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-outline-dark px-0 back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="lib/typed/typed.min.js"></script>
+  <script src="lib/easing/easing.min.js"></script>
+  <script src="lib/waypoints/waypoints.min.js"></script>
+  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+  <script src="lib/isotope/isotope.pkgd.min.js"></script>
+  <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+  <!-- 讓 TOC 也吃 scrollspy（不影響原本 navbar） -->
+  <script>
+    $(function(){
+      $('body').scrollspy({ target: '#toc', offset: 110 });
+    });
+  </script>
+
+  <!-- 你的主程式 -->
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+.kkx-admin.hidden {
+  display: none;
+}
+
+.kkx-gear {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 24px;
+  background: #2d5975;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+.kkx-song {
+  display: inline-block;
+  text-align: center;
+  margin: 10px;
+}
+.kkx-song img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.kkx-song p {
+  font-weight: bold;
+  margin: 4px 0 2px;
+}
+.kkx-song small {
+  color: #666;
+}
+
+.kkx-admin {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.kkx-admin-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.kkx-admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kkx-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.kkx-btn.primary {
+  background-color: #2d5975;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.kkx-btn {
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  margin-left: 8px;
+  cursor: pointer;
+}

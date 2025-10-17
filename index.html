@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Pei-Fan Lu</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.css" />
+
+</head>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
+<script>
+  // 綁定所有 data-fancybox 的元素
+Fancybox.bind("[data-fancybox]", {});
+document.addEventListener('DOMContentLoaded', function(){
+  const section = document.getElementById('port');
+  if(!section) return;
+
+  const track = section.querySelector('.port-gallery');
+  const prev  = section.querySelector('.prev-btn');
+  const next  = section.querySelector('.next-btn');
+
+  // 安全檢查：如果選不到元素就直接跳出
+  if(!track || !prev || !next){ console.warn('port 元素沒抓到'); return; }
+
+  // 以第一張卡片寬度 + gap 當每一步距離
+  function stepSize(){
+    const item = track.querySelector('.port-item');
+    if(!item) return 320;
+    const rect = item.getBoundingClientRect();
+    const gap  = parseFloat(getComputedStyle(track).gap || '0');
+    return rect.width + gap;
+  }
+
+  prev.addEventListener('click', () => {
+    track.scrollBy({ left: -stepSize(), behavior: 'smooth' });
+  });
+  next.addEventListener('click', () => {
+    track.scrollBy({ left:  stepSize(), behavior: 'smooth' });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function(){
+  const gallery = document.querySelector('#port .port-gallery');
+  const items   = gallery.querySelectorAll('.port-item');
+  let index     = 0;
+
+  function stepSize(){
+    const item = gallery.querySelector('.port-item');
+    if(!item) return 320;
+    const rect = item.getBoundingClientRect();
+    const gap  = parseFloat(getComputedStyle(gallery).gap || '0');
+    return rect.width + gap;
+  }
+
+  function showSlide(i){
+    gallery.scrollTo({
+      left: i * stepSize(),
+      behavior: 'smooth'
+    });
+  }
+
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  // 圖片清單
+  const images = [
+    "img/IMG_3187.JPG",
+    "img/IMG_3222.JPG"   // 第二張照片
+    
+  ];
+
+  let index = 0;
+  const slideshow = document.getElementById("slideshow");
+
+  // 每 5 秒切換一次
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    slideshow.src = images[index];
+  }, 5000);
+});
+
+const typedStrings = document.querySelector('.typed-text').textContent.trim().split(', ');
+new Typed('.typed-text-output', {
+  strings: typedStrings,
+  typeSpeed: 80,
+  backSpeed: 30,
+  backDelay: 1200,
+  loop: true,
+  smartBackspace: false,
+  contentType: 'null' // 當純文字處理，避免 & 問題
+});
+</script>
+<script defer src="/music-runtime.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="/src/index.jsx"></script>
+<script type="module" src="/src/App.jsx"></script>
+
+
+
+
+<body data-spy="scroll" data-target=".navbar" data-offset="51">
+    <!-- Navbar Start -->
+    <nav class="navbar fixed-top shadow-sm navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-lg-5">
+        <a href="index.html" class="navbar-brand ml-lg-3">
+        </a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse px-lg-3" id="navbarCollapse">
+            <div class="navbar-nav m-auto py-0">
+                <a href="#about" class="nav-item nav-link">About</a>
+                <a href="#qualification" class="nav-item nav-link">Quality</a>
+                <a href="#portfolio" class="nav-item nav-link">Portfolio</a>
+                <a href="#blog" class="nav-item nav-link">Blog</a>
+                <a href="#musiclist" class="nav-item nav-link">Music</a>
+                <a href="#mujourney" class="nav-item nav-link">journey</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Video Modal Start -->
+    <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>        
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="" id="video"  allowscriptaccess="always" allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal End -->
+<div id="homeCarousel" class="carousel slide carousel-fade container-fluid mb-5" data-ride="carousel" data-interval="4000" data-pause="false" style="min-height:100vh;">
+  <div class="carousel-inner" style="min-height:100vh;">
+    <!-- 第一張背景 -->
+    <div class="carousel-item active">
+      <div class="d-block w-100" 
+           style="background-image: url('img/543.jpg'); background-size:cover; background-position:center; min-height:100vh;">
+      </div>
+    </div>
+    <!-- 第二張背景 -->
+    <div class="carousel-item">
+      <div class="d-block w-100" 
+           style="background-image: url('img/340.jpg'); background-size:cover; background-position:center; min-height:100vh;">
+      </div>
+    </div>
+    <!-- 第三張背景 -->
+    <div class="carousel-item">
+      <div class="d-block w-100" 
+           style="background-image: url('img/IMG_3187.jpg'); background-size:cover; background-position:center; min-height:100vh;">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="d-block w-100" 
+           style="background-image: url('img/1232.jpg'); background-size:cover; background-position:center; min-height:100vh;">
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="d-block w-100" 
+           style="background-image: url('img/654.jpg'); background-size:cover; background-position:center; min-height:100vh;">
+      </div>
+    </div>
+  </div>
+  <div class="carousel-caption d-flex flex-column align-items-center justify-content-center" 
+       style="top:0; bottom:0;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-7 text-center text-lg-left">
+          <h3 class="text-white font-weight-normal mb-3">I'm</h3>
+          <h1 class="display-3 text-uppercase mb-2"
+            style="color: transparent; 
+                  -webkit-text-stroke: 2px #ffffff;">
+                  Pei-Fan Lu
+          </h1>
+          <h1 class="typed-text-output d-inline font-weight-lighter text-white"></h1>
+          <div class="typed-text d-none">
+            Student @NTNU, TAHRD, Curious Learner  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5" id="about">
+        <div class="container">
+            <div class="position-relative d-flex align-items-center justify-content-center">
+                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">About</h1>
+                <h1 class="position-absolute text-uppercase text-primary">About Me</h1>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-5 pb-4 pb-lg-0">
+                    <img class="img-fluid rounded w-100" src="img/12234.jpg" alt="">
+                </div>
+                <div class="col-lg-7">
+                    <h3 class="mb-4">Pei-Fan (Phoebe) Lu</h3>
+                    <p>Hi! I'm Pei-Fan (Phoebe) Lu! I'm a sophomore in the Department of Technology Application and Human Resource Development at the National Taiwan Normal University.</p>
+                    <p>● Curious & Creative Learner</p>
+                    <p>● Passionate about coding</p>
+                    <div class="row mb-3">
+                        <div class="col-sm-6 py-2"><h6>Email: <span class="text-secondary">phoebelu0724@gmail.com</span></h6></div>
+                    </div>
+                    <a href="www.linkedin.com/in/peifanphoebelu" target="_blank" class="btn btn-primary btn-sm">
+                        <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/PhoebeLu1011" target="_blank" class="btn btn-dark btn-sm">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+    
+    <!-- Qualification Start -->
+    <div class="container-fluid py-5" id="qualification">
+        <div class="container">
+            <div class="position-relative d-flex align-items-center justify-content-center">
+                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Quality</h1>
+                <h1 class="position-absolute text-uppercase text-primary">My Education & Expericence</h1>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Education</h3>
+                    <div class="border-left border-primary pt-2 pl-4 ml-2">
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">Undergraduate</h5>
+                            <p class="mb-2"><strong>National Taiwan Normal University</strong> | <small>2023 - present </small></p>
+                            <p>Undergraduate Student, Department of Technology Application and Human Resource Development</p>
+                        </div>
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">High School</h5>
+                            <p class="mb-2"><strong>St. Dominic Catholic High School</strong> | <small>2020 - 2023</small></p>
+                        </div>
+                    </div>
+                    <h3 class="mb-4 mt-5">Campus Ambassador</h3>
+                    <div class="border-left border-primary pt-2 pl-4 ml-2">
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">MediaTek</h5>
+                            <p class="mb-2"><strong>Girls TECH Action </strong> | <small>2025-2026</small></p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Club Expericence</h3>
+                    <div class="border-left border-primary pt-2 pl-4 ml-2">
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">Violist & Network Administrator</h5>
+                            <p class="mb-2"><strong>National Taiwan University Symphony Orchestra</strong> | <small>2023 - 2024</small></p>
+                            <p>NTUSO 113-1 Chamber Music Night -《 藝 ● 憶 》</p>
+                            <p>NTUSO 2024 Summer Concert -《The Best of Times》</p>
+                            <p>NTUSO 113-2 Chamber Music Night -《 藝 ● 薪 》</p>
+                            <p>NTUSO 2024 Winter Concert -《Enchanted Echoes》</p>
+                        </div>
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">PR Team Member</h5>
+                            <p class="mb-2"><strong>TEDxNTNU 2024</strong> | <small>2023 - 2024</small></p>
+                            <p>Coordinated with external partners to support event promotion for the TEDxNTNU annual event <strong>“Lifesick”</strong> in 2024.</p>
+                        </div>
+                        <div class="position-relative mb-4">
+                            <i class="far fa-dot-circle text-primary position-absolute" style="top: 2px; left: -32px;"></i>
+                            <h5 class="font-weight-bold mb-1">Club President</h5>
+                            <p class="mb-2"><strong>Medical Research Club</strong> | <small>2021 - 2022</small></p>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- Qualification End -->
+
+
+    <!-- Services Start -->
+     <div class="container-fluid pt-5" id="service">
+     <div class="container">
+
+        <!-- 作品集 -->
+        <section id="port">
+        <div class="port-container">
+
+            <!-- 水平滑動走道 -->
+            <div class="port-gallery">
+
+            <div class="port-item">
+                <img src="img/1232.jpg" alt="作品二圖片">
+                <div class="portfolio-details">
+                <h3>NTUSO 2024 Summer Concert -《The Best of Times》</h3>
+                <p> As a violist, I truly enjoyed performing Rachmaninoff’s Symphony No. 2. I am grateful to have many wonderful partners in university with whom I could share the joy of making music together. It was an unforgettable and amazing part of my musical journey!</p>
+                <p></p>
+                <a class="btn btn-sm btn-outline-primary py-2" href="https://youtube.com/playlist?list=PLWxD9JBT-P08jQ_3dkBa4fFyJ0i3bYWm0&si=-55H4hBfgl_osZC9">Video</a>
+                <p></p>                
+                <p style="font-size:0.9rem; color: var(--muted-text);">August, 2024</p>
+                </div>
+            </div>
+
+            <div class="port-item">
+                <!-- 16:9 響應式容器，data-ytid 換成你的影片 ID -->
+                <div class="yt-autoplay" data-ytid="YJOIZCHuY4Q" aria-label="YouTube video" data-start="167">
+                  <img src="img/lhps.jpg" alt="預覽圖" class="yt-poster">
+                </div>
+                <div class="portfolio-details">
+                <h3>NTUSO 113-2 Chamber Music Night -《 藝 ● 薪 》</h3>
+                <p>It was an unforgettable moment for me, since I had never imagined that we could gather together and played the same piece again after elementary school. Back then, we were in the same orchestra. In addition, I picked up the violin again, which I had previously played. It brought back our cherished moments!</p>
+                <p style="font-size:0.9rem; color: var(--muted-text);">May, 2024</p>
+                </div>
+            </div>
+            <div class="port-item">
+                <!-- 16:9 響應式容器，data-ytid 換成你的影片 ID -->
+                <div class="yt-autoplay" data-ytid="P4vXDjGCnmo" aria-label="YouTube video" data-start="71">
+                  <img src="img/chamber.jpg" alt="預覽圖" class="yt-poster">
+                </div>
+                <div class="portfolio-details">
+                <h3>NTUSO 113-1 Chamber Music Night -《 藝 ● 憶 》</h3>
+                <p>Tchaikovsky : Souvenir de Florence, Op.70, Mov.4  3D</p>
+                <p style="font-size:0.9rem; color: var(--muted-text);">November, 2023</p>
+                </div>
+            </div>
+            <div class="port-item">
+                <img src="img/ntusowin.jpg" alt="作品二圖片">
+                <div class="portfolio-details">
+                <h3>NTUSO 2024 Winter Concert -《Enchanted Echoes》</h3>
+                <p> @Taipei Zhongshan Hall</p>
+                <p> 1. Dukas: The Sorcerer's Apprentice</p>
+                <p> 2. Tomasi: Trumpet Concerto</p>
+                <p> 3. Tchaikovsky: Symphony No.5 in E minor, Op.64</p>
+                <p></p>
+                <a class="btn btn-sm btn-outline-primary py-2" href="https://youtube.com/playlist?list=PLWxD9JBT-P09EZw5qQwSxBxQT_bSyqGdU&si=2VxJGqLLOZx3dYhO">Video</a>
+                <p></p>
+                <p style="font-size:0.9rem; color: var(--muted-text);">February, 2024</p>
+                </div>
+            </div>
+            <!-- 卡片 1 -->
+            <div class="port-item">
+                <img id="slideshow" src="img/IMG_3187.JPG" alt="作品圖片" style="width:100%;max-width:600px;">
+                <div class="portfolio-details">
+                <h3>The Kaohsiung–Pingtung Night @ NTNU</h3>
+                <p>Performed as drummer and vocalist in a band at NTNU’s Kaohsiung–Pingtung Night — not only an amazing experience, but also a chance to develop teamwork and communication skills.</p>
+                <p style="font-size:0.9rem; color: var(--muted-text);">May, 2024</p>
+                </div>
+            </div>
+
+            <!-- 卡片 2（一定要放在同一個 .port-gallery 裡） -->
+            <div class="port-item">
+                <img src="img/ted.jpg" alt="作品二圖片">
+                <div class="portfolio-details">
+                <h3>TEDxNTNU2024 event “Lifesick”</h3>
+                <p>After about eight months of preparation, we finally held the event “Lifesick” successfully. Although there were many challenges during the process, we faced and solved the problems together. This experience not only strengthened our teamwork but also gave me a sense of accomplishment.</p>
+                <p style="font-size:0.9rem; color: var(--muted-text);">May, 2024</p>
+                </div>
+            </div>
+
+            <!-- 你要更多卡片就繼續加在這裡 -->
+
+            </div><!-- /.port-gallery -->
+
+            <!-- 左右按鈕（可選） -->
+            <div class="port-controls">
+            <button class="control-btn prev-btn">&lt;</button>
+            <button class="control-btn next-btn">&gt;</button>
+            </div>
+
+        </div><!-- /.port-container -->
+        </section>
+
+    </div>
+    </div>
+
+    <!-- Services End -->
+
+
+    <!-- Portfolio Start -->
+    <div class="container-fluid pt-5 pb-3" id="portfolio">
+        <div class="container">
+            <div class="position-relative d-flex align-items-center justify-content-center">
+                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Gallery</h1>
+                <h1 class="position-absolute text-uppercase text-primary">My Portfolio</h1>
+            </div>
+            <div class="row portfolio-container">
+                <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
+                    <div class="position-relative overflow-hidden mb-2">
+                        <img class="img-fluid rounded w-100" src="img/GAME.png" alt="">
+                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                            <a data-fancybox data-src="#game-detail" href="javascript:;">
+                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
+                            </a>
+                        </div>
+                        <!-- 隱藏的內容 -->
+                        <div id="game-detail" style="display:none;">
+                        <div class="fbx-card">
+                            <!-- 左圖 -->
+                            <div class="fbx-img">
+                            <img src="img/GAME.png" alt="作品圖片">
+                            </div>
+                            <!-- 右字 -->
+                            <div class="fbx-text">
+                            <h6>113-2 Programming Language Final Project</h6>
+                            <h4>Life Explosion Simulator: </h4>
+                            <h3>Final Exam Hell Edition</h3>
+                            <p>This is a fun and stress-relieving game that simulates the chaotic struggles of university students during finals week</p>
+                            <p class="text-muted">Tech Stack: Pygame, HTML, JavaScript, Flask</p>
+                            <a href="https://github.com/PhoebeLu1011/1132CODEfinalproject" target="_blank" class="btn btn-dark btn-sm">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
+                    <div class="position-relative overflow-hidden mb-2">
+                        <img class="img-fluid rounded w-100" src="img/port2.png" alt="">
+                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                            <a data-fancybox data-src="#health-detail" href="javascript:;">
+                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
+                            </a>
+                        </div>
+                        <!-- 隱藏的內容 -->
+                        <div id="health-detail" style="display:none;">
+                        <div class="fbx-card">
+                            <!-- 左圖 -->
+                            <div class="fbx-img">
+                                <img src="img/port2.png" alt="作品圖片">
+                            </div>
+                            <!-- 右字 -->
+                            <div class="fbx-text">
+                                <h6>113-2 Data Structure Final Project</h6>
+                                <h3>Smart Healthcare System</h3>
+                                <p>This is a system designed to take care of your health.</p>
+                                <p class="text-muted">Tech Stack: Python, HTML, JavaScript, Flask, AI Agents</p>
+                                <a href="https://github.com/PhoebeLu1011/1132databaseproject" target="_blank" class="btn btn-dark btn-sm">
+                                    <i class="fab fa-github"></i> View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                        
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Portfolio End -->
+
+
+  <div id="root"></div>
+
+
+
+    <!-- Blog Start -->
+    <div class="container-fluid pt-5" id="blog">
+        <div class="container">
+            <div class="position-relative d-flex align-items-center justify-content-center">
+                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Blog</h1>
+                <h1 class="position-absolute text-uppercase text-primary">Latest Blog</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded w-100" src="img/S__19701763.jpg" alt="">
+                        <div class="blog-date">
+                            <h4 class="font-weight-bold mb-n1">Sep.</h4>
+                            <small class="text-white text-uppercase">2025</small>
+                        </div>
+                    </div>
+                    <h5 class="font-weight-medium mb-4">Presented at IEEE QCE25! </h5>
+                    <a class="btn btn-sm btn-outline-primary py-2" href="qcewksexp.html">Read More</a>
+                </div>
+                <div class="col-lg-4 mb-5">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded w-100" src="img/23.jpg" alt="">
+                        <div class="blog-date">
+                            <h4 class="font-weight-bold mb-n1">May/Aug.</h4>
+                            <small class="text-white text-uppercase">2025</small>
+                        </div>
+                    </div>
+                    <h5 class="font-weight-medium mb-4">2025 MediaTek《Girls! TECH Action》</h5>
+                    <a class="btn btn-sm btn-outline-primary py-2" href="girlstech.html">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+    <!--  Start -->
+    <div class="container-fluid py-5" id="musiclist">
+      <div class="container">
+        <div class="position-relative d-flex align-items-center justify-content-center">
+          <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Music</h1>
+          <h1 class="position-absolute text-uppercase text-primary">My Playlist</h1>
+        </div>
+        <div id="musicroot"></div>
+      </div>
+    </div>
+    <div class="container-fluid py-5" id="mujourney">
+      <div class="container">
+        <div class="position-relative d-flex align-items-center justify-content-center">
+          <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Viola</h1>
+          <h1 class="position-absolute text-uppercase text-primary">My Music Journey</h1>
+        </div>
+            <div class="row portfolio-container">
+                <div class="col-lg-4 col-md-6 mb-4 portfolio-item first">
+                    <div class="position-relative overflow-hidden mb-2">
+                        <img class="img-fluid rounded w-100" src="img/pu.jpg" alt="">
+                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                            <a data-fancybox data-src="#pu" href="javascript:;">
+                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
+                            </a>
+                        </div>
+                        <!-- 隱藏的內容 -->
+                        <div id="pu" style="display:none;">
+                        <div class="fbx-card">
+                            <div class="fbx-text1">
+                                <h4>9TH KSAF</h4>
+                                <h2>《 普 欽 奈 拉 P u l c i n e l l a 》</h2>
+                            </div>
+
+                            <div class="yt-autoplay" data-ytid="s-cEaaItIzw" aria-label="YouTube video" data-start="0">
+                            </div>
+
+                        </div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
+                    <div class="position-relative overflow-hidden mb-2">
+                        <img class="img-fluid rounded w-100" src="img/trip.jpg" alt="">
+                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                            <a data-fancybox data-src="#trip" href="javascript:;">
+                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
+                            </a>
+                        </div>
+                        <!-- 隱藏的內容 -->
+                        <div id="trip" style="display:none;">
+                        <div class="fbx-card">
+                            <div class="fbx-text1">
+                                <h4>8TH KSAF</h4>
+                                <h3>《那段秘境的旅程 The Mysterious Journey》</h3>
+                            </div>
+
+                            <div class="yt-autoplay" data-ytid="tsy5oI1JH4k" aria-label="YouTube video" data-start="0">
+                            </div>
+
+                        </div>
+                        
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4 portfolio-item second">
+                    <div class="position-relative overflow-hidden mb-2">
+                        <img class="img-fluid rounded w-100" src="img/tw.jpg" alt="">
+                        <div class="portfolio-btn bg-primary d-flex align-items-center justify-content-center">
+                            <a data-fancybox data-src="#twkid" href="javascript:;">
+                                <i class="fa fa-plus text-white" style="font-size: 60px;"></i>
+                            </a>
+                        </div>
+                        <!-- 隱藏的內容 -->
+                        <div id="twkid" style="display:none;">
+                        <div class="fbx-card">
+                            <div class="fbx-text1">
+                                <h4>10TH KSAF</h4>
+                                <h3>飛向世界的台灣囝仔-《台灣四季X亞特蘭提斯傳說》</h3>
+                            </div>
+
+                            <div class="yt-autoplay" data-ytid="MtLY9f8QD6g" aria-label="YouTube video" data-start="0">
+                            </div>
+
+                        </div>
+                        
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+      </div>
+    </div>
+    <!-- Footer Start -->
+    <div class="container-fluid bg-primary text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="container text-center py-5">
+            <p class="m-0">&copy; <a class="text-white font-weight-bold" href="#">2025 Pei-Fan Lu</a>. All Rights Reserved. Designed by <a class="text-white font-weight-bold" href="https://htmlcodex.com">HTML Codex</a>
+            </p>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Scroll to Bottom -->
+    <i class="fa fa-2x fa-angle-down text-white scroll-to-bottom"></i>
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-outline-dark px-0 back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/typed/typed.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const source = document.querySelector('.typed-text');
+        if (!source || typeof Typed === 'undefined') return; // 保險
+
+        const typedStrings = (source.textContent || '').trim().split(', ');
+        new Typed('.typed-text-output', {
+          strings: typedStrings,
+          typeSpeed: 80,
+          backSpeed: 30,
+          backDelay: 1200,
+          loop: true,
+          smartBackspace: false,
+          contentType: 'null'
+        });
+      });
+    </script>
+    <script>
+    (function () {
+      const els = document.querySelectorAll('.yt-autoplay');
+
+      function makeIframe(id, start = 0, end = null) {
+        // 先在 URL 放 start/end，之後再用 seekTo 保險
+        const params = new URLSearchParams({
+          autoplay: '1',
+          mute: '1',
+          controls: '1',
+          playsinline: '1',
+          rel: '0',
+          enablejsapi: '1',
+        });
+        if (start) params.set('start', String(start));
+        if (end)   params.set('end',   String(end));
+
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${id}?${params.toString()}`;
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+        iframe.title = 'YouTube video player';
+        iframe.setAttribute('allowfullscreen', '');
+        return iframe;
+      }
+
+      function post(iframe, func, args = []) {
+        if (!iframe || !iframe.contentWindow) return;
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'command', func, args }), '*');
+      }
+
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const box = entry.target;
+          const id = box.getAttribute('data-ytid');
+          const start = parseInt(box.getAttribute('data-start') || '0', 10);
+          const endAttr = box.getAttribute('data-end');
+          const end = endAttr ? parseInt(endAttr, 10) : null;
+          let iframe = box.querySelector('iframe');
+
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            if (!iframe) {
+              const poster = box.querySelector('.yt-poster');
+              if (poster) poster.remove();
+
+              iframe = makeIframe(id, start, end);
+              // 關鍵：等 iframe 載入後再 seekTo，確保不會從 0 秒開始
+              iframe.addEventListener('load', () => {
+                // 給一個很短的緩衝，避免 API 尚未 ready
+                setTimeout(() => {
+                  if (start) post(iframe, 'seekTo', [start, true]);
+                  post(iframe, 'playVideo');
+                }, 200);
+              });
+
+              box.appendChild(iframe);
+            } else {
+              post(iframe, 'playVideo');
+            }
+          } else {
+            if (iframe) post(iframe, 'pauseVideo');
+          }
+        });
+      }, { threshold: [0, 0.6, 1] });
+
+      els.forEach(el => io.observe(el));
+    })();
+    </script>
+
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
