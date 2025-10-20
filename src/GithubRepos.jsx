@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 export default function GithubRepos({
   username = "PhoebeLu1011",
   limit = 6,
-  token = "" // 可選：放 GitHub Personal Access Token（只需 public_repo 權限）
+  token = "" 
 }) {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ export default function GithubRepos({
           ? { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }
           : { Accept: "application/vnd.github+json" };
 
-        // 取使用者公開 repos
+        // 取 repos
         const res = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`, { headers });
         if (!res.ok) {
           const msg = `GitHub API 錯誤（${res.status} ${res.statusText}）`;

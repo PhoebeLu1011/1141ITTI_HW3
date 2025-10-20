@@ -2,198 +2,141 @@ import { useEffect, useState } from "react";
 import "./music.css";
 
 export default function Music() {
-  // === UI / 資料狀態 ===
-  const [hasToken, setHasToken] = useState(false);
   const [playlist, setPlaylist] = useState(null);
   const [status, setStatus] = useState("");
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [clientId, setClientId] = useState(localStorage.getItem("KKBOX_CLIENT_ID") || "");
+  const [clientSecret, setClientSecret] = useState(localStorage.getItem("KKBOX_CLIENT_SECRET") || "");
 
-  // === localStorage keys / 常數 ===
-  const LS_ID = "KKBOX_CLIENT_ID";
-  const LS_SECRET = "KKBOX_CLIENT_SECRET";
-  const LS_TOKEN = "KKBOX_TOKEN";
-  const LS_EXP = "KKBOX_TOKEN_EXP";
-  const PLAYLIST_ID = "-lP7qjXsI1RZ-Iutny"; // 你的播放清單 ID
+  const PLAYLIST_ID = "-lP7qjXsI1RZ-Iutny";
   const TERRITORY = "TW";
 
-  // 取得（或刷新）access token
-  const fetchToken = async () => {
-    const clientId = localStorage.getItem(LS_ID);
-    const clientSecret = localStorage.getItem(LS_SECRET);
-    if (!clientId || !clientSecret) {
-      setStatus("尚未設定 Client ID / Secret");
-      return null;
+  // 送憑證到後端 + 存 localStorage
+  const saveKeys = async () => {
+    const id = clientId.trim();
+    const secret = clientSecret.trim();
+    if (!id || !secret) {
+      setStatus("請輸入 Client ID 與 Client Secret");
+      return;
     }
-
+    localStorage.setItem("KKBOX_CLIENT_ID", id);
+    localStorage.setItem("KKBOX_CLIENT_SECRET", secret);
     try {
-      const basicAuth = btoa(`${clientId}:${clientSecret}`);
-
-      // 直接打 KKBOX Oauth2
-      const res = await fetch("https://account.kkbox.com/oauth2/token", {
+      const r = await fetch("http://localhost:4000/api/save-kkbox-keys", {
         method: "POST",
-        headers: {
-          Authorization: `Basic ${basicAuth}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "grant_type=client_credentials",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientId: id, clientSecret: secret }),
       });
-
-      if (!res.ok) {
-        setStatus("無法取得 Token（可能是 CORS 或憑證錯誤）");
-        return null;
+      if (!r.ok) {
+        const err = await r.json().catch(() => ({}));
+        throw new Error(err.error || `儲存憑證失敗（${r.status}）`);
       }
-
-      const data = await res.json();
-      localStorage.setItem(LS_TOKEN, data.access_token);
-      localStorage.setItem(LS_EXP, String(Date.now() + data.expires_in * 1000));
-      return data.access_token;
-    } catch (err) {
-      console.error(err);
-      setStatus("取得 Token 發生錯誤（可能為 CORS）");
-      return null;
+      setPanelOpen(false);
+      setStatus("憑證已儲存，正在載入播放清單…");
+      await loadPlaylist(); // 存完就載清單
+    } catch (e) {
+      console.error(e);
+      setStatus(`上傳憑證失敗：${String(e.message || e)}`);
     }
   };
 
-  // 載入播放清單內容
+  // 從後端代理載入播放清單（後端會用快取 token 代打 KKBOX）
   const loadPlaylist = async () => {
     setStatus("載入播放清單中…");
-    let token = localStorage.getItem(LS_TOKEN);
-    const exp = parseInt(localStorage.getItem(LS_EXP) || "0", 10);
-
-    // token 不在或過期就重新取
-    if (!token || Date.now() > exp) {
-      token = await fetchToken();
-    }
-    if (!token) return;
-
     try {
-      const res = await fetch(
-        `https://api.kkbox.com/v1.1/featured-playlists/${PLAYLIST_ID}?territory=${TERRITORY}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
+      const res = await fetch(`http://localhost:4000/kkbox/playlist/${PLAYLIST_ID}?territory=${TERRITORY}`);
       if (!res.ok) {
-        setStatus("載入播放清單失敗");
+        const err = await res.json().catch(() => ({}));
+        const msg = err?.error || err?.message || `載入播放清單失敗（${res.status}）`;
+        setStatus(msg.includes("憑證") ? `伺服器尚未設定 KKBOX 憑證，請點 ⚙️ 設定。` : msg);
         setPlaylist(null);
-        setHasToken(false);
         return;
       }
-
       const data = await res.json();
       setPlaylist(data);
-      setHasToken(true);
       setStatus("");
-    } catch (err) {
-      console.error(err);
-      setStatus("載入播放清單發生錯誤");
+    } catch (e) {
+      console.error(e);
+      setStatus("載入播放清單發生錯誤，請稍後再試");
     }
   };
 
-  // 初始掛載：若已有 token，自動載入播放清單；綁定設定面板事件
   useEffect(() => {
-    if (localStorage.getItem(LS_TOKEN)) {
-      loadPlaylist();
-    }
-
-    const gearBtn = document.getElementById("kkx-gear");
-    const adminPanel = document.getElementById("kkx-admin");
-    const closeBtn = document.getElementById("kkx-close");
-    const idInput = document.getElementById("kkx-client-id");
-    const secretInput = document.getElementById("kkx-client-secret");
-    const getTokenBtn = document.getElementById("kkx-get-token");
-    const clearBtn = document.getElementById("kkx-clear");
-    const statusEl = document.getElementById("kkx-status");
-
-    const setInlineStatus = (msg) => {
-      if (statusEl) statusEl.textContent = msg || "";
-    };
-
-    const openPanel = () => {
-      if (idInput) idInput.value = localStorage.getItem(LS_ID) || "";
-      if (secretInput) secretInput.value = localStorage.getItem(LS_SECRET) || "";
-      adminPanel?.classList.remove("hidden");
-      setInlineStatus("");
-    };
-    const closePanel = () => adminPanel?.classList.add("hidden");
-    const toggleByHotkey = (e) => {
-      if (e.altKey && e.key.toLowerCase() === "k") {
-        adminPanel?.classList.toggle("hidden");
-      }
-    };
-
-    const handleSave = async () => {
-      const idVal = (idInput?.value || "").trim();
-      const secretVal = (secretInput?.value || "").trim();
-      if (!idVal || !secretVal) {
-        setInlineStatus("請輸入 Client ID 與 Secret");
-        return;
-      }
-      localStorage.setItem(LS_ID, idVal);
-      localStorage.setItem(LS_SECRET, secretVal);
-      closePanel();
-      await loadPlaylist(); // 存完立刻載入清單
-    };
-
-    const handleClear = () => {
-      localStorage.removeItem(LS_ID);
-      localStorage.removeItem(LS_SECRET);
-      localStorage.removeItem(LS_TOKEN);
-      localStorage.removeItem(LS_EXP);
-      if (idInput) idInput.value = "";
-      if (secretInput) secretInput.value = "";
-      setPlaylist(null);
-      setHasToken(false);
-      setStatus("已清除本機憑證");
-      alert("已清除本機憑證");
-    };
-
-    gearBtn?.addEventListener("click", openPanel);
-    closeBtn?.addEventListener("click", closePanel);
-    document.addEventListener("keydown", toggleByHotkey);
-    getTokenBtn?.addEventListener("click", handleSave);
-    clearBtn?.addEventListener("click", handleClear);
-
-    return () => {
-      gearBtn?.removeEventListener("click", openPanel);
-      closeBtn?.removeEventListener("click", closePanel);
-      document.removeEventListener("keydown", toggleByHotkey);
-      getTokenBtn?.removeEventListener("click", handleSave);
-      clearBtn?.removeEventListener("click", handleClear);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // 只在首次掛載時綁事件
+    // 一進來就嘗試載清單；若後端沒憑證，狀態會提示去設定
+    loadPlaylist();
+  }, []);
 
   return (
     <>
-      {/* ⚙️ 設定按鈕 */}
-      <button id="kkx-gear" className="kkx-gear" aria-label="開啟 KKBOX 設定">⚙️</button>
+      {/* ⚙️ 設定按鈕（開面板用） */}
+      <button
+        className="kkx-gear"
+        aria-label="開啟 KKBOX 設定"
+        onClick={() => setPanelOpen(true)}
+      >
+        ⚙️
+      </button>
 
-      {/* 設定面板 */}
-      <div id="kkx-admin" className="kkx-admin hidden" role="dialog" aria-modal="true">
-        <div className="kkx-admin-card">
-          <div className="kkx-admin-header">
-            <h3 id="kkx-admin-title">KKBOX 私密設定</h3>
-            <button id="kkx-close" className="kkx-close" aria-label="關閉">✕</button>
-          </div>
-          <div className="kkx-admin-body">
-            <label className="kkx-field">
-              <span>Client ID</span>
-              <input id="kkx-client-id" type="password" placeholder="輸入 KKBOX Client ID" autoComplete="off" />
-            </label>
-            <label className="kkx-field">
-              <span>Client Secret</span>
-              <input id="kkx-client-secret" type="password" placeholder="輸入 KKBOX Client Secret" autoComplete="off" />
-            </label>
-            <div className="kkx-actions">
-              <button id="kkx-get-token" className="kkx-btn primary">取得 Token 並儲存</button>
-              <button id="kkx-clear" className="kkx-btn">清除憑證</button>
+      {/* 設定面板（輸入 Client ID / Secret） */}
+      {panelOpen && (
+        <div className="kkx-admin" role="dialog" aria-modal="true">
+          <div className="kkx-admin-card">
+            <div className="kkx-admin-header">
+              <h3 id="kkx-admin-title">KKBOX 設定</h3>
+              <button
+                className="kkx-close"
+                aria-label="關閉"
+                onClick={() => setPanelOpen(false)}
+              >
+                ✕
+              </button>
             </div>
-            <p id="kkx-status" className="kkx-status" aria-live="polite"></p>
+            <div className="kkx-admin-body">
+              <label className="kkx-field">
+                <span>Client ID</span>
+                <input
+                  type="password"
+                  placeholder="輸入 KKBOX Client ID"
+                  autoComplete="off"
+                  value={clientId}
+                  onChange={(e) => setClientId(e.target.value)}
+                />
+              </label>
+              <label className="kkx-field">
+                <span>Client Secret</span>
+                <input
+                  type="password"
+                  placeholder="輸入 KKBOX Client Secret"
+                  autoComplete="off"
+                  value={clientSecret}
+                  onChange={(e) => setClientSecret(e.target.value)}
+                />
+              </label>
+              <div className="kkx-actions">
+                <button className="kkx-btn primary" onClick={saveKeys}>
+                  取得 Token 並儲存
+                </button>
+                <button
+                  className="kkx-btn"
+                  onClick={() => {
+                    localStorage.removeItem("KKBOX_CLIENT_ID");
+                    localStorage.removeItem("KKBOX_CLIENT_SECRET");
+                    setClientId("");
+                    setClientSecret("");
+                    setStatus("已清除本機憑證（後端端的憑證記憶需重設或覆蓋）");
+                  }}
+                >
+                  清除本機憑證
+                </button>
+              </div>
+              <p className="kkx-status" aria-live="polite">{status}</p>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* 播放清單 */}
-      {hasToken && playlist ? (
+      {/* 播放清單畫面 */}
+      {playlist ? (
         <div className="kkx-carousel">
           <h3 className="kkx-title">{playlist.title}</h3>
           <div className="kkx-strip">
@@ -208,7 +151,7 @@ export default function Music() {
         </div>
       ) : (
         <p style={{ textAlign: "center", paddingTop: "1em" }}>
-          {status || "⚠️ 尚未登入 KKBOX"}
+          {status || "載入中…"}
         </p>
       )}
     </>
