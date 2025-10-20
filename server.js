@@ -1,5 +1,3 @@
-// Node 18+ 有全域 fetch；若是 Node 16，請：npm i node-fetch 並取消下一行的註解
-// import fetch from "node-fetch";
 import express from "express";
 import cors from "cors";
 
@@ -7,7 +5,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 先給一個記憶體儲存（正式可改用 DB / .env）
 let kkboxKeys = { id: null, secret: null };
 let tokenCache = { accessToken: null, expiresAt: 0 };
 
@@ -18,7 +15,6 @@ app.post("/api/save-kkbox-keys", (req, res) => {
     return res.status(400).json({ error: "缺少 KKBOX 憑證" });
   }
   kkboxKeys = { id: clientId, secret: clientSecret };
-  // 清掉舊 token，確保下次會重新換
   tokenCache = { accessToken: null, expiresAt: 0 };
   res.json({ ok: true });
 });
@@ -59,7 +55,7 @@ app.get("/api/token", async (_req, res) => {
   }
 });
 
-// 代理播放清單（前端只打這支）
+// 代理播放清單
 app.get("/kkbox/playlist/:id", async (req, res) => {
   try {
     const token = await ensureToken();
