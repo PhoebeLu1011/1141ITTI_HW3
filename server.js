@@ -1,10 +1,17 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// 取得 __dirname（ESM 模組環境下）
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// KKBOX 憑證與 token 暫存
 let kkboxKeys = { id: null, secret: null };
 let tokenCache = { accessToken: null, expiresAt: 0 };
 
@@ -41,11 +48,11 @@ async function ensureToken() {
     throw new Error(`${r.status} ${r.statusText}: ${JSON.stringify(data)}`);
   }
   tokenCache.accessToken = data.access_token;
-  tokenCache.expiresAt = Date.now() + (data.expires_in - 30) * 1000; // 提前 30s 失效
+  tokenCache.expiresAt = Date.now() + (data.expires_in - 30) * 1000;
   return tokenCache.accessToken;
 }
 
-// （可選）讓前端檢查目前 token 狀態
+// 取得目前 token 狀態
 app.get("/api/token", async (_req, res) => {
   try {
     const t = await ensureToken();
@@ -72,5 +79,15 @@ app.get("/kkbox/playlist/:id", async (req, res) => {
   }
 });
 
+// === ⭐ 新增這段：Serve React Build 靜態檔 ===
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+// === ✅ Render 給的 PORT ===
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`✅ KKBOX proxy running: http://localhost:${PORT}`));
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ KKBOX proxy running at http://localhost:${PORT}`);
+});
