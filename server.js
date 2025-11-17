@@ -6,7 +6,6 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -47,11 +46,11 @@ async function ensureToken() {
     throw new Error(`${r.status} ${r.statusText}: ${JSON.stringify(data)}`);
   }
   tokenCache.accessToken = data.access_token;
-  tokenCache.expiresAt = Date.now() + (data.expires_in - 30) * 1000; // 提前 30s 失效
+  tokenCache.expiresAt = Date.now() + (data.expires_in - 30) * 1000;
   return tokenCache.accessToken;
 }
 
-// （可選）讓前端檢查目前 token 狀態
+// token 狀態
 app.get("/api/token", async (_req, res) => {
   try {
     const t = await ensureToken();
@@ -78,11 +77,11 @@ app.get("/kkbox/playlist/:id", async (req, res) => {
   }
 });
 
-// ---- 靜態檔案：把 Vite build 出來的 dist 當前端 ----
+// ---- 靜態檔案：把 dist 當前端 ----
 app.use(express.static(path.join(__dirname, "dist")));
 
-// 前端路由（React Router 等）- 交給 index.html
-app.get("*", (_req, res) => {
+// ⭐ Express 5 正確寫法，不會 crash
+app.get("/*", (_req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
