@@ -22,7 +22,7 @@ export default function Music() {
     localStorage.setItem("KKBOX_CLIENT_ID", id);
     localStorage.setItem("KKBOX_CLIENT_SECRET", secret);
     try {
-      const r = await fetch("http://localhost:4000/api/save-kkbox-keys", {
+      const r = await fetch("/api/save-kkbox-keys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ clientId: id, clientSecret: secret }),
@@ -44,7 +44,7 @@ export default function Music() {
   const loadPlaylist = async () => {
     setStatus("載入播放清單中…");
     try {
-      const res = await fetch(`http://localhost:4000/kkbox/playlist/${PLAYLIST_ID}?territory=${TERRITORY}`);
+      const res = await fetch(`/kkbox/playlist/${PLAYLIST_ID}?territory=${TERRITORY}`);
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         const msg = err?.error || err?.message || `載入播放清單失敗（${res.status}）`;
