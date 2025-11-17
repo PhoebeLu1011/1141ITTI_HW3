@@ -1,5 +1,11 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express();
 app.use(cors());
@@ -72,5 +78,14 @@ app.get("/kkbox/playlist/:id", async (req, res) => {
   }
 });
 
+// ---- 靜態檔案：把 Vite build 出來的 dist 當前端 ----
+app.use(express.static(path.join(__dirname, "dist")));
+
+// 前端路由（React Router 等）- 交給 index.html
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+// ---- 啟動 server ----
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`✅ KKBOX proxy running: http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ KKBOX proxy running on port ${PORT}`));
