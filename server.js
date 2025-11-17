@@ -80,8 +80,10 @@ app.get("/kkbox/playlist/:id", async (req, res) => {
 // ---- 靜態檔案：把 dist 當前端 ----
 app.use(express.static(path.join(__dirname, "dist")));
 
-// ⭐ Express 5 正確寫法，不會 crash
-app.get("/*", (_req, res) => {
+// ❗ 最後一個 middleware：沒有 path，不會經過 path-to-regexp
+//    只處理 GET，避免吃掉 API 的 POST/PUT 之類
+app.use((req, res, next) => {
+  if (req.method !== "GET") return next();
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
