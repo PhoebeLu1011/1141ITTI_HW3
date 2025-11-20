@@ -46,7 +46,7 @@ export default function Music() {
           type="button"
           onClick={loadPlaylist}
         >
-          重新載入播放清單
+          Reload
         </button>
       </div>
 
