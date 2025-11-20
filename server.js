@@ -10,19 +10,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-let kkboxKeys = { id: null, secret: null };
+let kkboxKeys = {
+  id: process.env.KKBOX_CLIENT_ID,
+  secret: process.env.KKBOX_CLIENT_SECRET
+};
 let tokenCache = { accessToken: null, expiresAt: 0 };
 
-// 前端提交憑證
-app.post("/api/save-kkbox-keys", (req, res) => {
-  const { clientId, clientSecret } = req.body || {};
-  if (!clientId || !clientSecret) {
-    return res.status(400).json({ error: "缺少 KKBOX 憑證" });
-  }
-  kkboxKeys = { id: clientId, secret: clientSecret };
-  tokenCache = { accessToken: null, expiresAt: 0 };
-  res.json({ ok: true });
-});
 
 // 取得/刷新 token
 async function ensureToken() {
